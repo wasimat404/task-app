@@ -18,6 +18,17 @@
 </div>
 
 ---
+# 📸 Screenshots
+
+## 🔹 Grafana Dashboard
+![Grafana](docs/screenshots/grafana.png)
+
+## 🔹 Frontend UI
+![Frontend](docs/screenshots/frontend.png)
+
+## 🔹 Kubeshark Traffic
+![Kubeshark](docs/screenshots/kubeshark.png)
+
 
 ## 📖 Table of Contents
 
