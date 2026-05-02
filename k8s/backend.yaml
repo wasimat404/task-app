@@ -23,7 +23,7 @@ spec:
         - name: DB_USER
           value: "postgres"
         - name: DB_PASSWORD
-          value: "password"
+          value: "postgres"
         - name: DB_NAME
           value: "tasks"
 
