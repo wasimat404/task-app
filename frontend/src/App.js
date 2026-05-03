@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [form, setForm] = useState({
@@ -11,10 +13,9 @@ function App() {
     due_date: ""
   });
 
-  // 🔥 Fetch tasks
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("/tasks/today");
+      const res = await axios.get(`${API}/tasks/today`);
       setTasks(res.data);
     } catch (err) {
       console.error("Fetch error:", err);
@@ -25,7 +26,6 @@ function App() {
     fetchTasks();
   }, []);
 
-  // 🔥 Create task
   const createTask = async () => {
     if (!form.title || !form.due_date) {
       alert("Title and Date required");
@@ -33,18 +33,17 @@ function App() {
     }
 
     try {
-      await axios.post("/tasks", form);
+      await axios.post(`${API}/tasks`, form);
       setForm({ title: "", description: "", link: "", due_date: "" });
-      fetchTasks(); // ✅ no reload
+      fetchTasks();
     } catch (err) {
       console.error("Create error:", err);
     }
   };
 
-  // 🔥 Actions
   const markDone = async (id) => {
     try {
-      await axios.put(`/tasks/${id}/done`);
+      await axios.put(`${API}/tasks/${id}/done`);
       setTasks(prev => prev.filter(task => task.id !== id));
     } catch (err) {
       console.error(err);
@@ -53,7 +52,7 @@ function App() {
 
   const markSkip = async (id) => {
     try {
-      await axios.put(`/tasks/${id}/skip`);
+      await axios.put(`${API}/tasks/${id}/skip`);
       setTasks(prev => prev.filter(task => task.id !== id));
     } catch (err) {
       console.error(err);
@@ -72,7 +71,6 @@ function App() {
       fontFamily: "Arial"
     }}>
 
-      {/* 🔥 HERO */}
       <h1 style={{
         fontSize: "80px",
         fontWeight: "900",
@@ -82,7 +80,6 @@ function App() {
         DO IT
       </h1>
 
-      {/* 🔥 FORM */}
       <div style={{
         marginBottom: "20px",
         background: "rgba(255,255,255,0.05)",
@@ -115,7 +112,6 @@ function App() {
         <button onClick={createTask}>➕ Add Task</button>
       </div>
 
-      {/* 🔥 CARDS */}
       {tasks.length === 0 ? (
         <p>No tasks for today</p>
       ) : (
